@@ -20,7 +20,7 @@ spec:
           command:
             - sh
             - -c
-            - mosquitto_passwd -c -b /passwd/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
+            - mosquitto_passwd -c -b /passwd/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD" && chmod 644 /passwd/passwd
           env:
             - name: MQTT_USERNAME
               valueFrom:
