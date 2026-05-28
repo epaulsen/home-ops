@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: esphome
 spec:
+  type: NodePort
   selector:
     app: esphome
   ports:
     - name: http
       port: 6052
       targetPort: http
+      nodePort: 30052
       protocol: TCP
