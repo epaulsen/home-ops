@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zigbee2mqtt-data
+spec:
+  storageClassName: local-path
+  volumeName: zigbee2mqtt-data-pv

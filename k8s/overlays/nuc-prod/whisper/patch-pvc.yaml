@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: whisper-data
+spec:
+  storageClassName: local-path
+  volumeName: whisper-data-pv

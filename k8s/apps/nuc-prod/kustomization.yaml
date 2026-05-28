@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - app-infra.yaml
+  - app-mqtt.yaml
+  - app-zigbee2mqtt.yaml
+  - app-whisper.yaml
+  - app-esphome.yaml
+  - app-postgres.yaml

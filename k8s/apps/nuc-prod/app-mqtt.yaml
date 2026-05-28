@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-ops-mqtt
+  namespace: argocd
+spec:
+  project: home-ops
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: home-ops
+  source:
+    repoURL: https://github.com/epaulsen/home-ops.git
+    targetRevision: main
+    path: k8s/overlays/nuc-prod/mqtt
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

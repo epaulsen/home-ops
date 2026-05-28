@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: esphome
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: esphome
+  template:
+    metadata:
+      labels:
+        app: esphome
+    spec:
+      containers:
+        - name: esphome
+          image: ghcr.io/esphome/esphome
+          ports:
+            - containerPort: 6052
+              name: http
+          volumeMounts:
+            - name: esphome-config
+              mountPath: /config
+      volumes:
+        - name: esphome-config
+          persistentVolumeClaim:
+            claimName: esphome-config

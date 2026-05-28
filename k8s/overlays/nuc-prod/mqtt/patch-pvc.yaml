@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mqtt-data
+spec:
+  storageClassName: local-path
+  volumeName: mqtt-data-pv

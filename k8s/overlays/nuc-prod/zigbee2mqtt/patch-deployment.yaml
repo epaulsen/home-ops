@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zigbee2mqtt
+spec:
+  template:
+    spec:
+      nodeSelector:
+        hardware.zigbee: "true"
+      containers:
+        - name: zigbee2mqtt
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: udev
+              mountPath: /run/udev
+              readOnly: true
+            - name: zigbee-stick
+              mountPath: /dev/ttyACM0
+            - name: serial-by-id
+              mountPath: /dev/serial/by-id
+              readOnly: true
+      volumes:
+        - name: udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: zigbee-stick
+          hostPath:
+            path: /dev/ttyACM0
+            type: CharDevice
+        - name: serial-by-id
+          hostPath:
+            path: /dev/serial/by-id
+            type: Directory
