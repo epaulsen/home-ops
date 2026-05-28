@@ -14,13 +14,34 @@ spec:
       labels:
         app: mqtt
     spec:
+      initContainers:
+        - name: mqtt-passwd
+          image: eclipse-mosquitto:2.0
+          command:
+            - sh
+            - -c
+            - mosquitto_passwd -c -b /passwd/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
+          env:
+            - name: MQTT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-credentials
+                  key: username
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-credentials
+                  key: password
+          volumeMounts:
+            - name: passwd
+              mountPath: /passwd
       containers:
         - name: mqtt
           image: eclipse-mosquitto:2.0
           command:
             - mosquitto
             - -c
-            - /mosquitto/config/mosquitto-no-auth.conf
+            - /mosquitto/config/mosquitto.conf
           ports:
             - containerPort: 1883
               name: mqtt
@@ -30,8 +51,10 @@ spec:
             - name: mqtt-data
               mountPath: /mosquitto
             - name: mqtt-config
-              mountPath: /mosquitto/config/mosquitto-no-auth.conf
-              subPath: mosquitto-no-auth.conf
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+            - name: passwd
+              mountPath: /passwd
       volumes:
         - name: mqtt-data
           persistentVolumeClaim:
@@ -39,3 +62,5 @@ spec:
         - name: mqtt-config
           configMap:
             name: mqtt-config
+        - name: passwd
+          emptyDir: {}

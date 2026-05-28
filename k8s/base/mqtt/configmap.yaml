@@ -3,11 +3,12 @@ kind: ConfigMap
 metadata:
   name: mqtt-config
 data:
-  mosquitto-no-auth.conf: |
+  mosquitto.conf: |
     persistence true
     persistence_location /mosquitto/data/
     log_dest stdout
     listener 1883
-    allow_anonymous true
+    allow_anonymous false
+    password_file /passwd/passwd
     listener 9001
     protocol websockets
