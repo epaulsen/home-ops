@@ -1,0 +1,127 @@
+services:
+  #homeassistant:
+  #  logging: # https://docs.docker.com/compose/compose-file/#loggin
+  #    driver: "json-file"
+  #    options:
+  #      max-size: "200k"
+  #      max-file: "3"
+  #  container_name: homeassistant
+  #  image: "ghcr.io/home-assistant/home-assistant:stable"
+  #  environment:
+  #    - TZ=NO
+  #  volumes:
+  #    - ./config:/config
+  #    - ./recordings:/media
+  #    - /etc/localtime:/etc/localtime:ro
+  #  restart: unless-stopped
+  #  privileged: true
+  #  network_mode: host
+  #
+  whisper:
+    image: rhasspy/wyoming-whisper
+    container_name: wyoming-whisper
+    restart: unless-stopped
+    ports:
+      - "10300:10300"
+    volumes:
+      - ./whisper-data:/data
+    command: >
+      --model NbAiLab/nb-whisper-small
+      --language no
+      --compute-type auto
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.5
+    shm_size: 1g
+    restart: always
+    network_mode: host
+    ports:
+      - "5234:5234"
+    environment:
+      POSTGRES_USER: postgresadmin
+      POSTGRES_PASSWORD: postgrespassword
+    volumes:
+      - /mnt/ext_hdd/postgres-data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+  
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome
+    volumes:
+      - /home/epaulsen/containers/hass/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6052:6052"
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+  mqtt:
+    logging: # https://docs.docker.com/compose/compose-file/#loggin
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    image: eclipse-mosquitto:2.0
+    restart: unless-stopped
+    volumes:
+      - "./mosquitto-data:/mosquitto"
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    command: "mosquitto -c /mosquitto-no-auth.conf"
+
+  zigbee2mqtt:
+    logging: # https://docs.docker.com/compose/compose-file/#loggin
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt:latest
+    volumes:
+      - ./zigbee2mqtt-data:/app/data
+      - "/etc/localtime:/etc/localtime:ro"
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8088:8080
+    environment:
+      - TZ=Europe/Berlin
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+
+#  swag:
+#    logging: # https://docs.docker.com/compose/compose-file/#loggin
+#      driver: "json-file"
+#      options:
+#        max-size: "200k"
+#        max-file: "10"
+#    image: ghcr.io/linuxserver/swag
+#    container_name: swag
+#    cap_add:
+#      - NET_ADMIN
+#    environment:
+#      - PUID=1001
+#      - PGID=1001
+#      - TZ=Europe/Berlin
+#      - URL=glumcasa.duckdns.org
+#      - VALIDATION=duckdns
+#      - DUCKDNSTOKEN=3470864f-4b6b-483d-9a00-c93636a150e3
+#      - SUBDOMAINS=wildcard
+#    volumes:
+#      - ./swag:/config
+#    ports:
+#      - 443:443
+#      - 80:80
+#    restart: unless-stopped
+
+
+# set trusted docker internal network
+networks:
+  default:
+      ipam:
+        config:
+         - subnet: 172.10.0.0/24
