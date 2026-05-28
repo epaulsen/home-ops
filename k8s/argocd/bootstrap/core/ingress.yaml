@@ -7,10 +7,10 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: argocd.home-ops.local
+    - host: glumserver.localdomain
       http:
         paths:
-          - path: /
+          - path: /argocd
             pathType: Prefix
             backend:
               service:

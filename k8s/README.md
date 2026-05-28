@@ -18,7 +18,7 @@ kubectl -n argocd rollout status deploy/argocd-server --timeout=180s
 kubectl apply -k k8s/argocd/bootstrap/apps
 ```
 
-Argo CD ingress host in this scaffold: `argocd.home-ops.local`.
+Argo CD is accessible at `http://glumserver.localdomain/argocd`.
 
 ## 3) Workload topology
 
