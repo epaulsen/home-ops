@@ -3,5 +3,7 @@ kind: Kustomization
 namespace: home-ops
 resources:
   - ../../../base/postgres
+  - sealed-secret.yaml
 patches:
   - path: patch-pvc.yaml
+  - path: patch-secret.yaml

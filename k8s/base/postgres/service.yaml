@@ -8,6 +8,6 @@ spec:
     app: postgres
   ports:
     - name: postgres
-      port: 5234
+      port: 5432
       targetPort: postgres
       protocol: TCP
