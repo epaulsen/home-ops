@@ -4,13 +4,14 @@ metadata:
   name: zigbee2mqtt
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: home-ops-strip-z2m@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
-    - host: zigbee2mqtt.home-ops.local
+    - host: glumserver.localdomain
       http:
         paths:
-          - path: /
+          - path: /z2m
             pathType: Prefix
             backend:
               service:

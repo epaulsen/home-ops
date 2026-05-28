@@ -4,6 +4,7 @@ namespace: home-ops
 resources:
   - ../../../base/zigbee2mqtt
   - ingress.yaml
+  - middleware.yaml
 patches:
   - path: patch-deployment.yaml
   - path: patch-pvc.yaml
