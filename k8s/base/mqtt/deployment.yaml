@@ -37,7 +37,7 @@ spec:
               mountPath: /passwd
       containers:
         - name: mqtt
-          image: eclipse-mosquitto:2.0
+          image: eclipse-mosquitto:2.0.22
           command:
             - mosquitto
             - -c
