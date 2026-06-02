@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: esphome
-          image: ghcr.io/esphome/esphome:stable
+          image: ghcr.io/esphome/esphome:2026.5
           ports:
             - containerPort: 6052
               name: http
