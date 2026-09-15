@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.9/manifests/install.yaml
   - ingress.yaml
+  - middleware.yaml
 patches:
   - path: argocd-cmd-params-cm.yaml
     target:
