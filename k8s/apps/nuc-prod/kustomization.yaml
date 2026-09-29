@@ -7,3 +7,4 @@ resources:
   - app-whisper.yaml
   - app-esphome.yaml
   - app-postgres.yaml
+  - app-node-red.yaml

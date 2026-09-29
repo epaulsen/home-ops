@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-red
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: node-red
+  template:
+    metadata:
+      labels:
+        app: node-red
+    spec:
+      containers:
+        - name: node-red
+          image: ghcr.io/hassio-addons/node-red/amd64:22.0.6
+          env:
+            - name: TZ
+              value: Europe/Oslo
+            - name: HA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: node-red-credentials
+                  key: ha-token
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: node-red-data
+              mountPath: /config
+            - name: node-red-options
+              mountPath: /data/options.json
+              subPath: options.json
+              readOnly: true
+      volumes:
+        - name: node-red-data
+          persistentVolumeClaim:
+            claimName: node-red-data
+        - name: node-red-options
+          configMap:
+            name: node-red-options

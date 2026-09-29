@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-red-options
+data:
+  options.json: |
+    {
+      "log_level": "info",
+      "theme": "default",
+      "http_node": {
+        "username": "",
+        "password": ""
+      },
+      "http_static": {
+        "username": "",
+        "password": ""
+      },
+      "ssl": false,
+      "certfile": "fullchain.pem",
+      "keyfile": "privkey.pem",
+      "system_packages": [],
+      "npm_packages": [],
+      "init_commands": [],
+      "leave_front_door_open": false,
+      "safe_mode": false
+    }

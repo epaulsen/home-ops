@@ -33,6 +33,7 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 - Postgres: `/mnt/ext_hdd/postgres-data`
 - MQTT: `/home/epaulsen/containers/hass/mosquitto-data`
 - Zigbee2MQTT: `/home/epaulsen/containers/hass/zigbee2mqtt-data`
+- Node-RED: `/home/epaulsen/containers/hass/node-red-data`
 - Whisper: `/home/epaulsen/containers/hass/whisper-data`
 - ESPHome: `/home/epaulsen/containers/hass/esphome`
 
@@ -46,3 +47,18 @@ This scaffold mounts both:
 - `/dev/serial/by-id` (stable path source for config)
 
 Recommended: set Zigbee serial port in Zigbee2MQTT config to `/dev/serial/by-id/<your-stick-id>`, then keep udev naming stable on host.
+
+## 6) Node-RED migration
+
+Create the HA long-lived access-token Secret in `home-ops` before syncing the Node-RED Argo CD application. The token is not stored in Git:
+
+```bash
+read -rsp 'Long-lived access token: ' HA_TOKEN
+printf '\n'
+kubectl -n home-ops create secret generic node-red-credentials \
+	--from-literal=ha-token="$HA_TOKEN" \
+	--dry-run=client -o yaml | kubectl apply -f -
+unset HA_TOKEN
+```
+
+The deployment exposes this value as `HA_TOKEN`. After importing the flow backup, update the Home Assistant server configuration in Node-RED to use the HA instance's network address and this token; the add-on's Supervisor connection is not available from Kubernetes.

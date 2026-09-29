@@ -7,3 +7,4 @@ resources:
   - zigbee2mqtt-pv.yaml
   - whisper-pv.yaml
   - esphome-pv.yaml
+  - node-red-pv.yaml
