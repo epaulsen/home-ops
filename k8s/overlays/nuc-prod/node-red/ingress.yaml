@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-red
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: glumserver.localdomain
+      http:
+        paths:
+          - path: /nodered
+            pathType: Prefix
+            backend:
+              service:
+                name: node-red
+                port:
+                  name: http
