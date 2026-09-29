@@ -1,26 +1,19 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: node-red-options
+  name: node-red-settings
 data:
-  options.json: |
-    {
-      "log_level": "info",
-      "theme": "default",
-      "http_node": {
-        "username": "",
-        "password": ""
+  settings.js: |
+    module.exports = {
+      httpAdminRoot: "/nodered",
+      adminAuth: {
+        type: "credentials",
+        users: [
+          {
+            username: "admin",
+            password: process.env.NODE_RED_ADMIN_PASSWORD_HASH,
+            permissions: "*",
+          },
+        ],
       },
-      "http_static": {
-        "username": "",
-        "password": ""
-      },
-      "ssl": false,
-      "certfile": "fullchain.pem",
-      "keyfile": "privkey.pem",
-      "system_packages": [],
-      "npm_packages": [],
-      "init_commands": [],
-      "leave_front_door_open": false,
-      "safe_mode": false
-    }
+    };

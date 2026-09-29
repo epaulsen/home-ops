@@ -7,6 +7,6 @@ spec:
     app: node-red
   ports:
     - name: http
-      port: 80
+      port: 1880
       targetPort: http
       protocol: TCP

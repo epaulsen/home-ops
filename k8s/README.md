@@ -50,8 +50,31 @@ Recommended: set Zigbee serial port in Zigbee2MQTT config to `/dev/serial/by-id/
 
 ## 6) Node-RED migration
 
-Node-RED is available through the existing ingress at `http://glumserver.localdomain/nodered` and directly on the NUC at `http://<nuc-ip>:1880`.
+Node-RED runs as a standalone container on port 1880 and is available only through the authenticated ingress at `http://glumserver.localdomain/nodered`. The `/data` directory is persistent on the NUC.
 
-After importing the flow backup, open a Home Assistant node and edit its shared server configuration. Disable the Home Assistant add-on option, set the Base URL to the HA instance's address reachable from the cluster (for example, `http://<ha-vm-ip>:8123`), and paste the long-lived access token into the Access Token field. Deploy the changes and verify the node reports a connection. The add-on's Supervisor connection is not available from Kubernetes.
+### Before Argo CD sync
 
-The server configuration is stored in the persistent Node-RED `/config` volume; no Kubernetes Secret is required for the HA token.
+Generate a bcrypt hash for the Node-RED editor password:
+
+```bash
+docker run --rm -it --entrypoint node-red nodered/node-red:4.1.3 admin hash-pw
+```
+
+Create the Kubernetes Secret using the hash printed by that command:
+
+```bash
+read -rsp 'Bcrypt password hash: ' NODE_RED_ADMIN_PASSWORD_HASH
+printf '\n'
+kubectl -n home-ops create secret generic node-red-admin-auth \
+	--from-literal=password-hash="$NODE_RED_ADMIN_PASSWORD_HASH" \
+	--dry-run=client -o yaml | kubectl apply -f -
+unset NODE_RED_ADMIN_PASSWORD_HASH
+```
+
+### Cutover
+
+1. Merge the PR, let Argo CD sync, then wait for `kubectl -n home-ops rollout status deploy/node-red` to complete.
+2. Open Node-RED and install `node-red-contrib-home-assistant-websocket` from **Menu > Manage palette > Install**. The standalone image does not include the Home Assistant nodes; the persistent `/data` volume keeps the package installed.
+3. Stop the old Node-RED app in Home Assistant Supervisor before importing or deploying the flows, so both instances do not run the same automations.
+4. Import the flow backup. Edit the shared Home Assistant server configuration: disable the add-on option, set Base URL to the HA VM address reachable from the cluster (for example, `http://<ha-vm-ip>:8123`), and paste the long-lived HA token into Access Token.
+5. Deploy and verify that the Home Assistant nodes connect and the expected flows run.

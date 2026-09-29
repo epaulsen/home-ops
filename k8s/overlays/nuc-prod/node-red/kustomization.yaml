@@ -5,4 +5,3 @@ resources:
   - ../../../base/node-red
   - pvc.yaml
   - ingress.yaml
-  - middleware.yaml
