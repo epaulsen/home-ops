@@ -20,11 +20,6 @@ spec:
           env:
             - name: TZ
               value: Europe/Oslo
-            - name: HA_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: node-red-credentials
-                  key: ha-token
           ports:
             - containerPort: 80
               name: http

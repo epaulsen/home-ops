@@ -50,15 +50,6 @@ Recommended: set Zigbee serial port in Zigbee2MQTT config to `/dev/serial/by-id/
 
 ## 6) Node-RED migration
 
-Create the HA long-lived access-token Secret in `home-ops` before syncing the Node-RED Argo CD application. The token is not stored in Git:
+After importing the flow backup, open a Home Assistant node and edit its shared server configuration. Disable the Home Assistant add-on option, set the Base URL to the HA instance's address reachable from the cluster (for example, `http://<ha-vm-ip>:8123`), and paste the long-lived access token into the Access Token field. Deploy the changes and verify the node reports a connection. The add-on's Supervisor connection is not available from Kubernetes.
 
-```bash
-read -rsp 'Long-lived access token: ' HA_TOKEN
-printf '\n'
-kubectl -n home-ops create secret generic node-red-credentials \
-	--from-literal=ha-token="$HA_TOKEN" \
-	--dry-run=client -o yaml | kubectl apply -f -
-unset HA_TOKEN
-```
-
-The deployment exposes this value as `HA_TOKEN`. After importing the flow backup, update the Home Assistant server configuration in Node-RED to use the HA instance's network address and this token; the add-on's Supervisor connection is not available from Kubernetes.
+The server configuration is stored in the persistent Node-RED `/config` volume; no Kubernetes Secret is required for the HA token.
