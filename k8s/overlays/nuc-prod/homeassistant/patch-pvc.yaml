@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homeassistant-config
+spec:
+  storageClassName: local-path
+  volumeName: homeassistant-config-pv

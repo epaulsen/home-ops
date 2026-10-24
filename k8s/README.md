@@ -37,10 +37,13 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 - Whisper: `/home/epaulsen/containers/hass/whisper-data`
 - ESPHome: `/home/epaulsen/containers/hass/esphome`
 - Matter Server: `/home/epaulsen/containers/hass/matter`
+- Home Assistant: `/home/epaulsen/containers/hass/ha-config` (new, dedicated config directory; not the existing `config/` folder)
 
 Adjust paths if your compose project directory on NUC is different.
 
 Matter Server uses host networking on port `5580`. The NUC overlay keeps the existing Matter.js fabric and vendor IDs so it opens the `server-2-134b` data directory. Traefik exposes the WebSocket endpoint at `ws://glumserver.localdomain/ws` on its `web` entrypoint and forwards it to the Matter Server service. Update Home Assistant to use this URL instead of connecting directly to port `5580`. Because the server still listens on all host interfaces, port `5580` remains directly reachable unless the host firewall restricts it; the ingress does not block that direct access. Stop the Docker Compose instance before Argo CD syncs the Kubernetes workload; only one Matter Server may use this fabric at a time.
+
+Home Assistant runs as a single-replica Deployment on the NUC with host networking and uses the pinned Core image version `2026.10.3`. Its `/config` volume is the new `ha-config` directory above; it does not mount the existing `config/` folder. The ingress serves `homeassistant.localdomain` on the `web` entrypoint, so point local DNS at the NUC and restore the full Home Assistant backup into this new instance after stopping the VM. After restore, configure Home Assistant's HTTP integration to trust the Traefik proxy (`use_x_forwarded_for` and the correct `trusted_proxies` range). Do not run the VM and Kubernetes Home Assistant at the same time.
 
 ## 5) Zigbee2MQTT device mapping on NUC
 
