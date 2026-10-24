@@ -10,3 +10,4 @@ resources:
   - app-node-red.yaml
   - app-matter-server.yaml
   - app-homeassistant.yaml
+  - app-netdaemon.yaml
