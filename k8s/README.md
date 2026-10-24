@@ -40,7 +40,7 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 
 Adjust paths if your compose project directory on NUC is different.
 
-Matter Server uses host networking on port `5580`. The NUC overlay keeps the existing Matter.js fabric and vendor IDs so it opens the `server-2-134b` data directory. Stop the Docker Compose instance before Argo CD syncs the Kubernetes workload; only one Matter Server may use this fabric at a time.
+Matter Server uses host networking on port `5580`. The NUC overlay keeps the existing Matter.js fabric and vendor IDs so it opens the `server-2-134b` data directory. Traefik exposes the WebSocket endpoint at `ws://glumserver.localdomain/ws` on its `web` entrypoint and forwards it to the Matter Server service. Update Home Assistant to use this URL instead of connecting directly to port `5580`. Because the server still listens on all host interfaces, port `5580` remains directly reachable unless the host firewall restricts it; the ingress does not block that direct access. Stop the Docker Compose instance before Argo CD syncs the Kubernetes workload; only one Matter Server may use this fabric at a time.
 
 ## 5) Zigbee2MQTT device mapping on NUC
 
