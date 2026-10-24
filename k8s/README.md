@@ -36,8 +36,11 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 - Node-RED: `/home/epaulsen/containers/hass/node-red-data`
 - Whisper: `/home/epaulsen/containers/hass/whisper-data`
 - ESPHome: `/home/epaulsen/containers/hass/esphome`
+- Matter Server: `/home/epaulsen/containers/hass/matter`
 
 Adjust paths if your compose project directory on NUC is different.
+
+Matter Server uses host networking on port `5580`. The NUC overlay keeps the existing Matter.js fabric and vendor IDs so it opens the `server-2-134b` data directory. Stop the Docker Compose instance before Argo CD syncs the Kubernetes workload; only one Matter Server may use this fabric at a time.
 
 ## 5) Zigbee2MQTT device mapping on NUC
 

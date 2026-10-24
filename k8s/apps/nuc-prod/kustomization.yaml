@@ -8,3 +8,4 @@ resources:
   - app-esphome.yaml
   - app-postgres.yaml
   - app-node-red.yaml
+  - app-matter-server.yaml
