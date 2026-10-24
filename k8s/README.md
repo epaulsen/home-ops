@@ -38,6 +38,7 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 - ESPHome: `/home/epaulsen/containers/hass/esphome`
 - Matter Server: `/home/epaulsen/containers/hass/matter`
 - Home Assistant: `/home/epaulsen/containers/hass/ha-config` (new, dedicated config directory; not the existing `config/` folder)
+- NetDaemon: `/home/epaulsen/containers/hass/netdaemon-config` (new, dedicated config directory)
 
 Adjust paths if your compose project directory on NUC is different.
 
@@ -86,3 +87,17 @@ unset NODE_RED_ADMIN_PASSWORD_HASH
 3. Stop the old Node-RED app in Home Assistant Supervisor before importing or deploying the flows, so both instances do not run the same automations.
 4. Import the flow backup. Edit the shared Home Assistant server configuration: disable the add-on option, set Base URL to the HA VM address reachable from the cluster (for example, `http://<ha-vm-ip>:8123`), and paste the long-lived HA token into Access Token.
 5. Deploy and verify that the Home Assistant nodes connect and the expected flows run.
+
+## 7) NetDaemon migration
+
+NetDaemon runs as one replica without a Service or ingress; it only makes outbound connections to Home Assistant, MQTT, and UniFi. Its `/config` volume uses the dedicated `/home/epaulsen/containers/hass/netdaemon-config` directory above. Copy the existing files from `/home/epaulsen/containers/netdaemon/config` into that directory before Argo CD syncs the new application.
+
+The deployment uses the in-cluster service names `homeassistant` and `mqtt`. It reads `HASS_TOKEN`, `MQTT_PASSWORD`, and `UnifiApiKey` from the `netdaemon-credentials` Secret; these values must not be committed to Git. Before merging/syncing, create or update the Secret from the existing Compose `.env` file:
+
+```bash
+kubectl -n home-ops create secret generic netdaemon-credentials \
+  --from-env-file=/home/epaulsen/containers/netdaemon/.env \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Stop the Docker Compose NetDaemon before the Kubernetes workload starts to avoid running duplicate automations.
