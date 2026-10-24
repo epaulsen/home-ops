@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matter-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: matter-server
+  template:
+    metadata:
+      labels:
+        app: matter-server
+    spec:
+      containers:
+        - name: matter-server
+          image: ghcr.io/matter-js/matterjs-server@sha256:b7f4f6c888ece6214a0720ab68c3a46654c71c6d34d01ef1850095d210c0615b
+          ports:
+            - containerPort: 5580
+              name: websocket
+              protocol: TCP
+          env:
+            - name: FABRIC_ID
+              value: "2"
+            - name: VENDOR_ID
+              value: "4939"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: matter-server-data
+              mountPath: /data
+      volumes:
+        - name: matter-server-data
+          persistentVolumeClaim:
+            claimName: matter-server-data

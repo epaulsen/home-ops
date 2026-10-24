@@ -8,3 +8,4 @@ resources:
   - whisper-pv.yaml
   - esphome-pv.yaml
   - node-red-pv.yaml
+  - matter-server-pv.yaml
