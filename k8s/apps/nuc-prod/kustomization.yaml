@@ -9,3 +9,4 @@ resources:
   - app-postgres.yaml
   - app-node-red.yaml
   - app-matter-server.yaml
+  - app-homeassistant.yaml

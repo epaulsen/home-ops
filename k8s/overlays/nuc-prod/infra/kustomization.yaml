@@ -9,3 +9,4 @@ resources:
   - esphome-pv.yaml
   - node-red-pv.yaml
   - matter-server-pv.yaml
+  - homeassistant-config-pv.yaml
