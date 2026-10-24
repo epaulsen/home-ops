@@ -11,5 +11,5 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /home/epaulsen/containers/netdaemon/netdaemon-config
+    path: /home/epaulsen/containers/hass/netdaemon-config
     type: DirectoryOrCreate

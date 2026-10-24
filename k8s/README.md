@@ -38,7 +38,7 @@ Overlay creates static hostPath PVs so K8s reuses existing on-disk state:
 - ESPHome: `/home/epaulsen/containers/hass/esphome`
 - Matter Server: `/home/epaulsen/containers/hass/matter`
 - Home Assistant: `/home/epaulsen/containers/hass/ha-config` (new, dedicated config directory; not the existing `config/` folder)
-- NetDaemon: `/home/epaulsen/containers/netdaemon/netdaemon-config` (new, dedicated config directory)
+- NetDaemon: `/home/epaulsen/containers/hass/netdaemon-config` (new, dedicated config directory)
 
 Adjust paths if your compose project directory on NUC is different.
 
@@ -90,7 +90,7 @@ unset NODE_RED_ADMIN_PASSWORD_HASH
 
 ## 7) NetDaemon migration
 
-NetDaemon runs as one replica without a Service or ingress; it only makes outbound connections to Home Assistant, MQTT, and UniFi. Its `/config` volume uses the dedicated `netdaemon-config` directory above. Copy the existing files from `/home/epaulsen/containers/netdaemon/config` into that directory before Argo CD syncs the new application.
+NetDaemon runs as one replica without a Service or ingress; it only makes outbound connections to Home Assistant, MQTT, and UniFi. Its `/config` volume uses the dedicated `/home/epaulsen/containers/hass/netdaemon-config` directory above. Copy the existing files from `/home/epaulsen/containers/netdaemon/config` into that directory before Argo CD syncs the new application.
 
 The deployment uses the in-cluster service names `homeassistant` and `mqtt`. It reads `HASS_TOKEN`, `MQTT_PASSWORD`, and `UnifiApiKey` from the `netdaemon-credentials` Secret; these values must not be committed to Git. Before merging/syncing, create or update the Secret from the existing Compose `.env` file:
 
