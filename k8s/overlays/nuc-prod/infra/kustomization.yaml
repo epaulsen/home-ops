@@ -7,6 +7,7 @@ resources:
   - zigbee2mqtt-pv.yaml
   - whisper-pv.yaml
   - esphome-pv.yaml
+  - esphome-config-v2-pv.yaml
   - node-red-pv.yaml
   - matter-server-pv.yaml
   - homeassistant-config-pv.yaml
