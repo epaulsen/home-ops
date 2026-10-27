@@ -5,3 +5,5 @@ resources:
   - ../../../base/node-red
   - pvc.yaml
   - ingress.yaml
+patches:
+  - path: patch-deployment.yaml
