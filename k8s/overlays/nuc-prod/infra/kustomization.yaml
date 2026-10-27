@@ -11,6 +11,7 @@ resources:
   - node-red-pv.yaml
   - node-red-data-v2-pv.yaml
   - matter-server-pv.yaml
+  - matter-server-data-v2-pv.yaml
   - homeassistant-config-pv.yaml
   - homeassistant-config-v2-pv.yaml
   - netdaemon-config-pv.yaml
