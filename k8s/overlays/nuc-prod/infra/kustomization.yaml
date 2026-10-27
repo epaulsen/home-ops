@@ -15,3 +15,5 @@ resources:
   - homeassistant-config-pv.yaml
   - homeassistant-config-v2-pv.yaml
   - netdaemon-config-pv.yaml
+  - netdaemon-config-v2-pv.yaml
+  - whisper-data-v2-pv.yaml
