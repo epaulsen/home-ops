@@ -5,6 +5,7 @@ resources:
   - postgres-pv.yaml
   - mqtt-pv.yaml
   - zigbee2mqtt-pv.yaml
+  - zigbee2mqtt-data-v2-pv.yaml
   - whisper-pv.yaml
   - esphome-pv.yaml
   - esphome-config-v2-pv.yaml

@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
 spec:
-  replicas: 0
   template:
     spec:
       nodeSelector:
@@ -33,6 +32,9 @@ spec:
               mountPath: /dev/serial/by-id
               readOnly: true
       volumes:
+        - name: zigbee2mqtt-data
+          persistentVolumeClaim:
+            claimName: zigbee2mqtt-data-v2
         - name: udev
           hostPath:
             path: /run/udev
