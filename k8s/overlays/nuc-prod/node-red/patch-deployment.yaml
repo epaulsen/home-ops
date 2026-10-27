@@ -3,4 +3,9 @@ kind: Deployment
 metadata:
   name: node-red
 spec:
-  replicas: 0
+  template:
+    spec:
+      volumes:
+        - name: node-red-data
+          persistentVolumeClaim:
+            claimName: node-red-data-v2
