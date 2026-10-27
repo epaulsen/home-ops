@@ -3,10 +3,15 @@ kind: Deployment
 metadata:
   name: esphome
 spec:
+  replicas: 1
   template:
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
+      volumes:
+        - name: esphome-config
+          persistentVolumeClaim:
+            claimName: esphome-config-v2
       containers:
         - name: esphome
           securityContext:
