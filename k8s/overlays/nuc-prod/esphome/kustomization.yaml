@@ -6,4 +6,3 @@ resources:
   - esphome-config-v2-pvc.yaml
 patches:
   - path: patch-deployment.yaml
-  - path: patch-pvc.yaml

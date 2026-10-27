@@ -55,4 +55,4 @@ spec:
       volumes:
         - name: netdaemon-config
           persistentVolumeClaim:
-            claimName: netdaemon-config
+            claimName: netdaemon-config-v2

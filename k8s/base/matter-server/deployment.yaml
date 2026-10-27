@@ -37,4 +37,4 @@ spec:
       volumes:
         - name: matter-server-data
           persistentVolumeClaim:
-            claimName: matter-server-data
+            claimName: matter-server-data-v2
