@@ -58,7 +58,7 @@ spec:
       volumes:
         - name: mqtt-data
           persistentVolumeClaim:
-            claimName: mqtt-data
+            claimName: mqtt-data-v2
         - name: mqtt-config
           configMap:
             name: mqtt-config

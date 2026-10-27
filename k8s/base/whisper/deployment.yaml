@@ -33,4 +33,4 @@ spec:
       volumes:
         - name: whisper-data
           persistentVolumeClaim:
-            claimName: whisper-data
+            claimName: whisper-data-v2

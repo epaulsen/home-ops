@@ -50,7 +50,7 @@ spec:
       volumes:
         - name: node-red-data
           persistentVolumeClaim:
-            claimName: node-red-data
+            claimName: node-red-data-v2
         - name: node-red-settings
           configMap:
             name: node-red-settings
