@@ -4,4 +4,5 @@ namespace: home-ops
 resources:
   - ../../../base/netdaemon
 patches:
+  - path: patch-deployment.yaml
   - path: patch-pvc.yaml
