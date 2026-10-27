@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: matter-server
 spec:
+  replicas: 0
   template:
     spec:
       hostNetwork: true
