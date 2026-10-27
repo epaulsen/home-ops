@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - postgres-pv.yaml
+  - mqtt-data-v2-pv.yaml
+  - zigbee2mqtt-data-v2-pv.yaml
+  - esphome-config-v2-pv.yaml
+  - node-red-data-v2-pv.yaml
+  - matter-server-data-v2-pv.yaml
+  - homeassistant-config-v2-pv.yaml
+  - netdaemon-config-v2-pv.yaml
+  - whisper-data-v2-pv.yaml
