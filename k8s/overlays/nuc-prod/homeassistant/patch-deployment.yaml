@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: homeassistant
 spec:
+  replicas: 0
   template:
     spec:
       hostNetwork: true
