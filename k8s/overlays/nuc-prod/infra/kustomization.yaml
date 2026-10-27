@@ -4,6 +4,7 @@ resources:
   - namespace.yaml
   - postgres-pv.yaml
   - mqtt-pv.yaml
+  - mqtt-data-v2-pv.yaml
   - zigbee2mqtt-pv.yaml
   - zigbee2mqtt-data-v2-pv.yaml
   - whisper-pv.yaml

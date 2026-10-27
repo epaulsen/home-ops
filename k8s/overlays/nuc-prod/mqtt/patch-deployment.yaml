@@ -3,4 +3,9 @@ kind: Deployment
 metadata:
   name: mqtt
 spec:
-  replicas: 0
+  template:
+    spec:
+      volumes:
+        - name: mqtt-data
+          persistentVolumeClaim:
+            claimName: mqtt-data-v2

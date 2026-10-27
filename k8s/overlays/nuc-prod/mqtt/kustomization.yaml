@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: home-ops
 resources:
   - ../../../base/mqtt
+  - mqtt-data-v2-pvc.yaml
 patches:
   - path: patch-deployment.yaml
   - path: patch-pvc.yaml
