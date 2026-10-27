@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
 spec:
+  replicas: 0
   template:
     spec:
       nodeSelector:
