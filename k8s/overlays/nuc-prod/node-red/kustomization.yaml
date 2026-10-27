@@ -4,6 +4,7 @@ namespace: home-ops
 resources:
   - ../../../base/node-red
   - pvc.yaml
+  - node-red-data-v2-pvc.yaml
   - ingress.yaml
 patches:
   - path: patch-deployment.yaml
