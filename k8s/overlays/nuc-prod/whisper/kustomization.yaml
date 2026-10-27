@@ -1,8 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: home-ops
-resources:
-  - ../../../base/whisper
-  - whisper-data-v2-pvc.yaml
-patches:
-  - path: patch-deployment.yaml

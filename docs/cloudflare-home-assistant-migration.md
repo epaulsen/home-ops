@@ -115,22 +115,22 @@ proxy ranges without identifying actual Traefik source addresses.
 Add these paths, matching current `base` and `overlays/nuc-prod` structure:
 
 ```text
-k8s/base/homeassistant/
+base/homeassistant/
   deployment.yaml
   service.yaml
   pvc.yaml
   kustomization.yaml
 
-k8s/overlays/nuc-prod/homeassistant/
+overlays/nuc-prod/homeassistant/
   patch-deployment.yaml
   patch-pvc.yaml
   kustomization.yaml
 
-k8s/overlays/nuc-prod/infra/
+overlays/nuc-prod/infra/
   homeassistant-pv.yaml
 ```
 
-Add an Argo CD Application under `k8s/apps/nuc-prod/` and include it in that
+Add an Argo CD Application under `apps/nuc-prod/` and include it in that
 directory's `kustomization.yaml`.
 
 ## Application Deployments
