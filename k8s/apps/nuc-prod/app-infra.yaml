@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/epaulsen/home-ops.git
     targetRevision: main
-    path: k8s/overlays/nuc-prod/infra
+    path: overlays/nuc-prod/infra
   syncPolicy:
     automated:
       prune: true

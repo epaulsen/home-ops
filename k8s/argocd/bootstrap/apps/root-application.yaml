@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/epaulsen/home-ops.git
     targetRevision: main
-    path: k8s/apps/nuc-prod
+    path: apps/nuc-prod
   syncPolicy:
     automated:
       prune: true

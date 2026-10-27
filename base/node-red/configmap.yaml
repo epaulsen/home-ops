@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-red-settings
+data:
+  settings.js: |
+    module.exports = {
+      httpAdminRoot: "/nodered",
+      adminAuth: {
+        type: "credentials",
+        users: [
+          {
+            username: "admin",
+            password: process.env.NODE_RED_ADMIN_PASSWORD_HASH,
+            permissions: "*",
+          },
+        ],
+      },
+    };

@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netdaemon
+spec:
+  template:
+    spec:
+      volumes:
+        - name: netdaemon-config
+          persistentVolumeClaim:
+            claimName: netdaemon-config-v2
