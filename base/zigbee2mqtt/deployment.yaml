@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: zigbee2mqtt
-          image: koenkk/zigbee2mqtt:2.13
+          image: koenkk/zigbee2mqtt:2.14.3
           env:
             - name: TZ
               value: Europe/Berlin
