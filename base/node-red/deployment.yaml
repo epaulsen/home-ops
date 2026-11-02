@@ -28,7 +28,7 @@ spec:
               mountPath: /data
       containers:
         - name: node-red
-          image: nodered/node-red:4.1.17
+          image: nodered/node-red:4.1.17-22
           env:
             - name: TZ
               value: Europe/Oslo
