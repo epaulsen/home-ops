@@ -149,7 +149,7 @@ kubectl -n home-ops create secret generic netdaemon-credentials \
 hash with the same image version used by the Deployment:
 
 ```bash
-docker run --rm -it --entrypoint node-red nodered/node-red:4.1.3 admin hash-pw
+docker run --rm -it --entrypoint node-red nodered/node-red:4.1.17 admin hash-pw
 ```
 
 Store the resulting hash securely and create `node-red-admin-auth` with the

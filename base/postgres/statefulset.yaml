@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: pgautoupgrade/pgautoupgrade:15-alpine
+          image: pgautoupgrade/pgautoupgrade:15.19-alpine
           ports:
             - containerPort: 5432
               name: postgres
