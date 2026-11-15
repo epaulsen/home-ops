@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xcomfort2mqtt
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: xcomfort2mqtt
+  template:
+    metadata:
+      labels:
+        app: xcomfort2mqtt
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1654
+        runAsGroup: 1654
+      containers:
+        - name: xcomfort2mqtt
+          image: epaulsen/xcomfort2mqtt:1.0.1
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name: TZ
+              value: Europe/Oslo
+            - name: XComfort__Host
+              valueFrom:
+                configMapKeyRef:
+                  name: xcomfort2mqtt-config
+                  key: host
+            - name: XComfort__AuthKey
+              valueFrom:
+                secretKeyRef:
+                  name: xcomfort2mqtt-credentials
+                  key: auth-key
+            - name: Mqtt__Host
+              value: mqtt
+            - name: Mqtt__Port
+              value: "1883"
+            - name: Mqtt__Username
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-credentials
+                  key: username
+            - name: Mqtt__Password
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-credentials
+                  key: password
+          ports:
+            - containerPort: 8080
+              name: http
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 24
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 30
+          volumeMounts:
+            - name: xcomfort2mqtt-data
+              mountPath: /app/data
+      volumes:
+        - name: xcomfort2mqtt-data
+          persistentVolumeClaim:
+            claimName: xcomfort2mqtt-data

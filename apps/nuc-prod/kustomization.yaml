@@ -11,3 +11,4 @@ resources:
   - app-matter-server.yaml
   - app-homeassistant.yaml
   - app-netdaemon.yaml
+  - app-xcomfort2mqtt.yaml
