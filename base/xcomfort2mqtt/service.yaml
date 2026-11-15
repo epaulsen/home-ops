@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: xcomfort2mqtt
+spec:
+  type: ClusterIP
+  selector:
+    app: xcomfort2mqtt
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

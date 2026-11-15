@@ -11,3 +11,4 @@ resources:
   - homeassistant-config-v2-pv.yaml
   - netdaemon-config-v2-pv.yaml
   - whisper-data-v2-pv.yaml
+  - xcomfort2mqtt-data-pv.yaml
